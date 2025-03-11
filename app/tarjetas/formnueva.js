@@ -3,9 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react"
 
-const API_URL = "http://localhost:3000/"
 
-export default function FormNueva() {
+export default function FormNueva({onSend}) {
 
     const [anverso, setAnverso] = useState("")
     const [reverso, setReverso] = useState("")
@@ -15,11 +14,7 @@ export default function FormNueva() {
 
     const handleSumbit = async (event) => {
         event.preventDefault()
-        await fetch(API_URL + "/api/tarjetas", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({anverso, reverso})
-        })
+        onSend({ anverso, reverso })
         router.refresh()
         setAnverso("")
         setReverso("")
